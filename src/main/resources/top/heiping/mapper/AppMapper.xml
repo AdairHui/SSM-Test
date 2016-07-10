@@ -1,0 +1,59 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace:到上面类的全路径
+ -->
+<mapper namespace="top.heiping.dao.AppDao">
+	
+	<!-- 可以不需要 -->
+	<resultMap id="BaseResultMap" type="top.heiping.domain.App">
+		<id property="id" column="id" jdbcType="INTEGER" javaType="int"/>
+		<result property="name" column="name" jdbcType="VARCHAR" javaType="string"/>
+	</resultMap>
+	
+	<select id="list" resultType="top.heiping.domain.App">
+		SELECT 
+			id,name 
+		FROM
+			User
+	</select>
+	
+	<insert id="insert" parameterType="top.heiping.domain.App">
+		INSERT INTO 
+			User(name) 
+		VALUE
+			(#{name,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM
+			User
+		WHERE
+			id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<update id="update" parameterType="top.heiping.domain.App">
+		UPDATE 
+			User
+		SET
+			name=#{name,jdbcType=VARCHAR}
+		WHERE
+			id=#{id,jdbcType=INTEGER}
+	</update>
+	
+	<select id="getByMap" parameterType="map" resultType="top.heiping.domain.App">
+		SELECT 
+			id,name 
+		FROM
+			User
+		<where>
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="name != null">
+				AND name = #{name,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+</mapper>
